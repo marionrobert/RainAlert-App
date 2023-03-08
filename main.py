@@ -13,6 +13,8 @@ weather_params = {
     "exclude": "alerts,daily,current,minutely"
 }
 
+
+
 response = requests.get(OWM_Endpoint, params=weather_params)
 response.raise_for_status()
 data = response.json()
@@ -28,5 +30,11 @@ for id in all_ids:
 
 if will_rain:
     print("Bring an umbrella")
-
+    client = Client(account_sid, auth_token)
+    message = client.messages.create(
+        body="It's going to rain today. Remember to bring an umbrella.",
+        from_=test_phone_number,
+        to=my_phone_number
+    )
+    print(message.status)
 
